@@ -1,0 +1,46 @@
+-- Jump Power Toggle Script hosted on GitHub
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+-- Create the GUI
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = player.PlayerGui
+
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 200, 0, 100)
+frame.Position = UDim2.new(0, 10, 0, 10)
+frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+frame.Parent = screenGui
+
+local toggleButton = Instance.new("TextButton")
+toggleButton.Size = UDim2.new(0, 180, 0, 50)
+toggleButton.Position = UDim2.new(0, 10, 0, 25)
+toggleButton.Text = "Toggle Jump Power: OFF"
+toggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+toggleButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+toggleButton.Parent = frame
+
+-- Variables for jump power and toggling
+local jumpPower = 120
+local jumpPowerEnabled = false
+
+-- Function to toggle jump power
+local function toggleJumpPower()
+    jumpPowerEnabled = not jumpPowerEnabled
+    if jumpPowerEnabled then
+        humanoid.UseJumpPower = true
+        humanoid.JumpPower = jumpPower
+        toggleButton.Text = "Toggle Jump Power: ON"
+    else
+        humanoid.UseJumpPower = false
+        toggleButton.Text = "Toggle Jump Power: OFF"
+    end
+end
+
+-- Button click event to toggle
+toggleButton.MouseButton1Click:Connect(toggleJumpPower)
+
+-- Initialize default state
+humanoid.UseJumpPower = false
